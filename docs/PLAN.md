@@ -57,10 +57,10 @@
 
 ### Task 2.1 — Pydantic models (`core/models.py`)
 
-- [ ] Implement `Vault`, `Key`, `KeyVersion`, `Deployment`, `Exposure`, `AccessEvent`, `VaultSettings`, plus all required enums.
-- [ ] `KeyVersion.value` is `SecretStr`.
-- [ ] Custom JSON serializer that raises if a `SecretStr` is serialized outside an "encrypted context" flag.
-- [ ] Fingerprints are computed once at `KeyVersion` creation and stored.
+- [x] Implement `Vault`, `Key`, `KeyVersion`, `Deployment`, `Exposure`, `AccessEvent`, `VaultSettings`, plus all required enums.
+- [x] `KeyVersion.value` is `SecretStr`.
+- [x] Custom JSON serializer that raises if a `SecretStr` is serialized outside an "encrypted context" flag.
+- [x] Fingerprints are computed once at `KeyVersion` creation and stored.
 
 **Acceptance:** Full round-trip serialization test; attempt to JSON-dump a `SecretStr` in non-encrypted context raises.
 
