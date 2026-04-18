@@ -150,29 +150,29 @@
 
 ### Task 6.1 — Provider base and registry (`core/providers/base.py`, `registry.py`)
 
-- [ ] Define `Provider` ABC per `ARCHITECTURE.md` §6.4.
-- [ ] `ProviderKey`, `ProviderKeyInfo` Pydantic models.
-- [ ] Registry discovers all `Provider` subclasses and exposes them by `name`.
+- [x] Define `Provider` ABC per `ARCHITECTURE.md` §6.4.
+- [x] `ProviderKey`, `ProviderKeyInfo` Pydantic models.
+- [x] Registry discovers all `Provider` subclasses and exposes them by `name`.
 
 **Acceptance:** Tests: a mock `FakeProvider` subclass is automatically discovered by the registry.
 
 ### Task 6.2 — OpenAI provider (`core/providers/openai.py`)
 
-- [ ] Implement `create_key`, `revoke_key`, `test_key`, `list_keys` against OpenAI's admin API.
-- [ ] Use the official `openai` SDK where possible; fall back to `httpx` for admin endpoints not yet in the SDK.
-- [ ] `test_key` makes a cheap models-list call.
+- [x] Implement `create_key`, `revoke_key`, `test_key`, `list_keys` against OpenAI's admin API.
+- [x] Use the official `openai` SDK where possible; fall back to `httpx` for admin endpoints not yet in the SDK.
+- [x] `test_key` makes a cheap models-list call.
 
 **Acceptance:** Mock-based unit tests cover happy path and three error cases (invalid existing key, rate limit, network failure). Opt-in integration test exists but is not run by default CI.
 
 ### Task 6.3 — Anthropic provider (`core/providers/anthropic.py`)
 
-- [ ] Same API as OpenAI provider.
+- [x] Same API as OpenAI provider.
 
 **Acceptance:** Same as 6.2.
 
 ### Task 6.4 — Stripe provider (`core/providers/stripe.py`)
 
-- [ ] Same API. Use Stripe's restricted-key creation endpoint where possible to limit blast radius of vault-issued keys.
+- [x] Same API. Use Stripe's restricted-key creation endpoint where possible to limit blast radius of vault-issued keys.
 
 **Acceptance:** Same as 6.2.
 
