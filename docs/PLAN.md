@@ -32,10 +32,10 @@
 
 ### Task 1.1 — Crypto primitives (`core/crypto.py`)
 
-- [ ] Implement `derive_kek`, `generate_dek`, `wrap_dek`, `unwrap_dek`, `encrypt_body`, `decrypt_body`, `generate_salt`, `generate_recovery_code`.
-- [ ] All functions pure; no file I/O; no global state.
-- [ ] Enforce parameter validation (salt length, key length) at function boundaries; raise `CryptoError` subclasses on misuse.
-- [ ] Define `WrappedDEK` and `EncryptedBody` Pydantic models.
+- [x] Implement `derive_kek`, `generate_dek`, `wrap_dek`, `unwrap_dek`, `encrypt_body`, `decrypt_body`, `generate_salt`, `generate_recovery_code`.
+- [x] All functions pure; no file I/O; no global state.
+- [x] Enforce parameter validation (salt length, key length) at function boundaries; raise `CryptoError` subclasses on misuse.
+- [x] Define `WrappedDEK` and `EncryptedBody` Pydantic models.
 
 **Acceptance:**
 
