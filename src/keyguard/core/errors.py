@@ -23,9 +23,11 @@ __all__ = [
     "ProviderUnavailableError",
     "ScanTimeoutError",
     "ScannerError",
+    "SessionLockedError",
     "UnsupportedVersionError",
     "WrongPasswordError",
     "WrongRecoveryCodeError",
+    "WrongTOTPError",
 ]
 
 
@@ -66,6 +68,14 @@ class UnsupportedVersionError(CryptoError):
     """Vault ``format_version`` is newer than this build understands, or is
     a legacy version with no automatic migration path.
     """
+
+
+class WrongTOTPError(CryptoError):
+    """User-supplied TOTP code did not validate against the stored secret."""
+
+
+class SessionLockedError(CryptoError):
+    """Operation attempted on a ``Session`` after it was locked."""
 
 
 # ---------------------------------------------------------------------------
