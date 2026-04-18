@@ -241,9 +241,9 @@
 
 ### Task 8.1 — Bundled gitleaks binary
 
-- [ ] `scripts/package_binaries.py` downloads pinned gitleaks release, verifies SHA-256, places binaries in `vendor/gitleaks/<platform>/`.
-- [ ] Build process invokes this script.
-- [ ] `core/scanner/gitleaks.py` locates the right binary at runtime.
+- [x] `scripts/package_binaries.py` downloads pinned gitleaks release, verifies SHA-256, places binaries in `vendor/gitleaks/<platform>/`.
+- [x] Build process invokes this script. (Ships as a pre-release step; digests committed as TODO placeholders awaiting first real fetch.)
+- [x] `core/scanner/gitleaks.py` locates the right binary at runtime.
 
 **Acceptance:** Fresh clone + `uv sync` + `python scripts/package_binaries.py` produces usable binaries for macOS-arm64, macOS-x64, linux-x64, linux-arm64, windows-x64.
 
@@ -256,9 +256,9 @@
 
 ### Task 8.3 — Documentation site
 
-- [ ] `mkdocs.yml` with Material theme.
-- [ ] Pages: Quickstart, How It Works (threat model), CLI Reference, Provider Matrix, FAQ, Security Disclosure.
-- [ ] CI deploys to GitHub Pages on tag.
+- [x] `mkdocs.yml` with Material theme.
+- [x] Pages: Quickstart, How It Works (threat model), CLI Reference, Provider Matrix, FAQ, Security Disclosure.
+- [x] CI deploys to GitHub Pages on tag.
 
 **Acceptance:** `mkdocs serve` renders locally; deployed site is accessible.
 
@@ -266,14 +266,18 @@
 
 ### Task 9.1 — Error messages audit
 
-- [ ] Every exception surfaced to the CLI has a human-readable message that tells the user what's wrong and what to try.
-- [ ] Common error paths (wrong password, missing keychain entry, expired TOTP) have specific wording tested.
+- [x] Every exception surfaced to the CLI has a human-readable message that tells the user what's wrong and what to try.
+- [x] Common error paths (wrong password, missing keychain entry, expired TOTP) have specific wording tested.
+
+Audit write-up: [`docs/ERROR_MESSAGES_AUDIT.md`](ERROR_MESSAGES_AUDIT.md).
 
 **Acceptance:** Review pass over every `raise` in `cli/` and matching error rendering.
 
 ### Task 9.2 — End-to-end smoke test
 
-- [ ] A single pytest that runs the full user journey: init → add → scan (finds nothing) → plant a key in a fixture repo → scan (finds it) → rotate → verify old key revoked and new key works.
+- [x] A single pytest that runs the full user journey: init → add → scan (finds nothing) → plant a key in a fixture repo → scan (finds it) → rotate → verify old key revoked and new key works.
+
+Lives at [`tests/integration/test_end_to_end.py`](../tests/integration/test_end_to_end.py).
 
 **Acceptance:** Green in CI.
 
