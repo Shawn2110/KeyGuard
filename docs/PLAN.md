@@ -101,10 +101,10 @@
 
 ### Task 4.1 — Session manager (`core/session.py`)
 
-- [ ] `Session.unlock(vault_path, password, totp_code)` — orchestrates keychain read, TOTP verification, vault open.
-- [ ] `Session.lock()` — zeroize the DEK reference, drop the in-memory vault.
-- [ ] Auto-lock timer: configurable, default 5 minutes.
-- [ ] All vault-mutating operations go through `Session` methods; each appends an `AccessEvent`.
+- [x] `Session.unlock(vault_path, password, totp_code)` — orchestrates keychain read, TOTP verification, vault open.
+- [x] `Session.lock()` — zeroize the DEK reference, drop the in-memory vault.
+- [x] Auto-lock timer: configurable, default 5 minutes.
+- [x] All vault-mutating operations go through `Session` methods; each appends an `AccessEvent`.
 
 **Acceptance:**
 
