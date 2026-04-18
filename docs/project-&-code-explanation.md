@@ -379,30 +379,42 @@ six topology tests confirming every public name is a `KeyGuardError`
 subclass, subtrees don't cross-contaminate, and every class is raisable
 and catchable at the root.
 
-### 9.3 `src/keyguard/core/crypto.py`  [pending — Task 1.1]
+### 9.3 `src/keyguard/core/crypto.py`  [implemented — Task 1.1]
 
 Pure functions. No file I/O, no global state. Wraps `cryptography` and
-`argon2-cffi`. Planned public API:
+`argon2-cffi`. Public API:
 
-- `derive_kek(preimage, salt) -> bytes` — Argon2id with the locked params.
+- `derive_kek(preimage, salt) -> bytes` — Argon2id with the locked params
+  (`t=3, m=64 MiB, p=4, hash_len=32`).
 - `compose_primary_kek_input(password, local_half, server_half) -> bytes` —
-  HKDF-per-input composition, produces the 96-byte Argon2id preimage.
+  HKDF-per-input composition (Option B), produces the 96-byte Argon2id
+  preimage for `KEK_primary`.
 - `compose_recovery_kek_input(password, recovery_code) -> bytes` — same
-  for the recovery path.
+  pattern for the recovery path, producing a 64-byte preimage.
 - `generate_dek() -> bytes` — 32 random bytes via `secrets.token_bytes`.
-- `wrap_dek(kek, dek) -> WrappedDEK` — AES-256-GCM encrypt the DEK.
-- `unwrap_dek(kek, wrapped) -> bytes` — inverse; raises
-  `WrongPasswordError`/`WrongRecoveryCodeError` on auth-tag failure.
+- `wrap_dek(kek, dek, salt) -> WrappedDEK` — AES-256-GCM encrypt the DEK;
+  the KDF salt that produced `kek` is packaged into the returned
+  `WrappedDEK` so every unlock-path entry is self-contained.
+- `unwrap_dek(kek, wrapped, *, recovery=False) -> bytes` — inverse; raises
+  `WrongPasswordError` by default or `WrongRecoveryCodeError` when the
+  caller sets `recovery=True`.
 - `encrypt_body(dek, plaintext, aad) -> EncryptedBody` — vault body cipher.
 - `decrypt_body(dek, body, aad) -> bytes` — inverse; raises
-  `CorruptedVaultError` on auth-tag failure.
+  `CorruptedVaultError` on any auth-tag failure.
 - `generate_salt() -> bytes` — 16 random bytes.
 - `generate_recovery_code() -> tuple[str, bytes]` — 20 raw bytes plus the
-  dashed base32 display form.
+  dashed base32 display form `XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX`.
 
-Property tests with `hypothesis` will cover: round-trip for plaintexts up
-to 10 MB, tamper detection on any bit of ciphertext/nonce/AAD, and
-wrong-key rejection for `unwrap_dek`.
+Signature deviations from ARCHITECTURE §6.1 (minor, on the record):
+`wrap_dek` takes a third `salt` argument so `WrappedDEK` carries KDF
+metadata inline, and `unwrap_dek` accepts a keyword-only `recovery` flag
+so the caller picks the error type. AAD composition remains deferred to
+Task 2.2 (`core/vault.py`).
+
+**Tested by** [`tests/unit/test_crypto.py`](../tests/unit/test_crypto.py) —
+43 unit tests plus 6 Hypothesis property tests covering round-trip,
+ciphertext/nonce/AAD bit-flip tamper detection, and wrong-KEK rejection.
+Coverage: **99%** on `crypto.py` (target: 95%).
 
 ### 9.4 `src/keyguard/core/vault.py`  [pending — Task 2.2]
 
@@ -689,7 +701,7 @@ As of 2026-04-18:
 |---|---|---|---|
 | 0 | 0.1 Repo scaffold | ✅ Done | `pyproject.toml`, `.github/workflows/ci.yml`, `.pre-commit-config.yaml`, `.gitignore`, `README.md`, full `src/` + `tests/` package tree |
 | 0 | 0.2 Threat model doc | Not started | `docs/THREAT_MODEL.md` |
-| 1 | 1.1 Crypto primitives | Not started | `src/keyguard/core/crypto.py` |
+| 1 | 1.1 Crypto primitives | ✅ Done (99% cov) | `src/keyguard/core/crypto.py`, `tests/unit/test_crypto.py` |
 | 1 | 1.2 Error hierarchy | ✅ Done | `src/keyguard/core/errors.py`, `tests/unit/test_errors.py` |
 | 2 | 2.1 Pydantic models | Not started | `src/keyguard/core/models.py` |
 | 2 | 2.2 Vault I/O | Not started | `src/keyguard/core/vault.py` |
@@ -704,7 +716,8 @@ As of 2026-04-18:
 | 9 | 9.1–9.3 Hardening + release | Not started | |
 
 Acceptance gate snapshot: `ruff check` clean, `ruff format` clean,
-`mypy --strict src` clean (7 source files), `pytest` 8 passed.
+`mypy --strict src` clean (8 source files), `pytest` 51 passed, crypto
+module at 99% coverage.
 
 ## 15. v1 → v2 roadmap
 
