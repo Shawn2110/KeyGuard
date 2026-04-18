@@ -20,7 +20,7 @@
 
 ### Task 0.2 — Threat model document
 
-- [ ] Write `docs/THREAT_MODEL.md` covering:
+- [x] Write `docs/THREAT_MODEL.md` covering:
   - Assets: vault file, TOTP secret, `local_half`, master password, recovery code, decrypted DEK in memory.
   - Adversaries: opportunistic thief (stolen laptop powered off), same-user malware, network attacker, cloud-backup leak, phishing.
   - For each adversary, what they can and cannot achieve against the current design.
