@@ -66,10 +66,10 @@
 
 ### Task 2.2 — Vault file I/O (`core/vault.py`)
 
-- [ ] Implement `create_vault`, `open_vault`, `open_vault_with_recovery`, `UnlockedVault.save`, `UnlockedVault.rotate_password`.
-- [ ] Atomic writes: `.tmp` + `os.replace`.
-- [ ] Backup rotation: keep last 3 backups as `vault.enc.bak.1`, `.bak.2`, `.bak.3`.
-- [ ] Use `platformdirs` to determine the default vault path.
+- [x] Implement `create_vault`, `open_vault`, `open_vault_with_recovery`, `UnlockedVault.save`, `UnlockedVault.rotate_password`.
+- [x] Atomic writes: `.tmp` + `os.replace`.
+- [x] Backup rotation: keep last 3 backups as `vault.enc.bak.1`, `.bak.2`, `.bak.3`.
+- [x] Use `platformdirs` to determine the default vault path.
 
 **Acceptance:**
 
