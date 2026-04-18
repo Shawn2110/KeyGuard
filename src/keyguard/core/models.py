@@ -226,7 +226,15 @@ class Key(_StrictBase):
 
 
 class AccessEvent(_StrictBase):
-    """One immutable entry in :attr:`Vault.access_log`."""
+    """One immutable entry in :attr:`Vault.access_log`.
+
+    ``frozen=True`` means attribute assignment on an existing event raises
+    ``ValidationError`` — the audit log is append-only, and individual
+    entries are also write-once. (The ``details`` dict can still be
+    mutated by reference; audit callers should not rely on that.)
+    """
+
+    model_config = ConfigDict(strict=True, extra="ignore", frozen=True)
 
     timestamp: datetime
     event_type: EventType
