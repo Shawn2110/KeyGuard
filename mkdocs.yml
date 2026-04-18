@@ -1,0 +1,51 @@
+site_name: KeyGuard
+site_description: Local-first encrypted vault for API keys with leak scanner and provider rotation.
+site_url: https://shawn2110.github.io/KeyGuard/
+repo_url: https://github.com/Shawn2110/KeyGuard
+repo_name: Shawn2110/KeyGuard
+
+# The public-facing user docs live in `docs_site/` so the repo's planning
+# docs (PRD, ARCHITECTURE, PLAN, AGENT, THREAT_MODEL, explainer) keep
+# their natural home under `docs/` without cluttering the published site.
+docs_dir: docs_site
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - How it works: how-it-works.md
+  - CLI reference: cli.md
+  - Provider matrix: providers.md
+  - FAQ: faq.md
+  - Security disclosure: security.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
