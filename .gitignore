@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+pip-wheel-metadata/
+
+# Virtual envs
+.venv/
+venv/
+env/
+.python-version
+
+# Caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Vendored binaries (fetched per-platform by scripts/package_binaries.py)
+vendor/gitleaks/*/
+
+# Secrets & vaults — never commit, even accidentally
+.env
+.env.*
+!.env.example
+vault.enc
+vault.enc.bak*
+*.vault
+*.kguard
+
+# Docs build output
+site/
+
+# Editor scratch
+*.iml
+
+# uv
+uv.lock.bak
+
+# Claude Code local (user) config; shared `.claude/settings.json` is tracked
+.claude/settings.local.json
