@@ -6,6 +6,7 @@ code path that enters this context; everywhere else gets ``CryptoError``
 on attempt. This is the Task 2.1 guardrail from ``docs/PLAN.md``.
 """
 
+from base64 import b64decode, b64encode
 from collections.abc import Iterator
 from contextlib import contextmanager
 from contextvars import ContextVar
@@ -13,10 +14,18 @@ from datetime import datetime
 from enum import StrEnum
 from hashlib import sha256
 from hmac import new as hmac_new
-from typing import Any
+from typing import Annotated, Any
 from uuid import UUID, uuid4
 
-from pydantic import Base64Bytes, BaseModel, ConfigDict, Field, SecretStr, field_serializer
+from pydantic import (
+    BaseModel,
+    BeforeValidator,
+    ConfigDict,
+    Field,
+    PlainSerializer,
+    SecretStr,
+    field_serializer,
+)
 
 from keyguard.core.errors import CryptoError
 
@@ -42,6 +51,22 @@ __all__ = [
 
 FINGERPRINT_LEN = 32  # HMAC-SHA256 output
 FINGERPRINT_KEY_LEN = 32  # per-vault HMAC key
+
+
+def _decode_b64_on_load(value: Any) -> bytes:
+    if isinstance(value, str):
+        return b64decode(value)
+    if isinstance(value, bytes):
+        return value
+    raise TypeError(f"expected str or bytes, got {type(value).__name__}")
+
+
+# Bytes field that round-trips as raw bytes in Python and base64 in JSON.
+_B64Bytes = Annotated[
+    bytes,
+    BeforeValidator(_decode_b64_on_load),
+    PlainSerializer(lambda b: b64encode(b).decode("ascii"), return_type=str, when_used="json"),
+]
 
 
 # ---------------------------------------------------------------------------
@@ -173,7 +198,7 @@ class KeyVersion(_StrictBase):
     created_at: datetime
     revoked_at: datetime | None = None
     rotation_reason: str | None = None
-    fingerprint: Base64Bytes
+    fingerprint: _B64Bytes
 
     @field_serializer("value", when_used="json")
     def _serialize_value(self, v: SecretStr) -> str:
@@ -204,7 +229,7 @@ class Exposure(_StrictBase):
     discovered_at: datetime
     source_type: ExposureSourceType
     location: str  # human-readable: file path, commit SHA, URL, etc.
-    key_fingerprint: Base64Bytes
+    key_fingerprint: _B64Bytes
     severity: ExposureSeverity
     status: ExposureLifecycle = ExposureLifecycle.DETECTED
     resolved_at: datetime | None = None
