@@ -26,7 +26,7 @@ class AnthropicProvider(Provider):
 
     name: ClassVar[str] = "anthropic"
     display_name: ClassVar[str] = "Anthropic"
-    key_pattern: ClassVar[re.Pattern[str]] = re.compile(r"^sk-ant-[A-Za-z0-9_\-]{20,}$")
+    key_pattern: ClassVar[re.Pattern[str]] = re.compile(r"sk-ant-[A-Za-z0-9_\-]{20,}")
 
     def test_key(self, key: str) -> bool:
         try:
