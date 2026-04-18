@@ -122,27 +122,27 @@
 
 ### Task 5.1 — Gitleaks wrapper (`core/scanner/gitleaks.py`)
 
-- [ ] Locate the bundled gitleaks binary (in `vendor/gitleaks/<platform>/`).
-- [ ] Invoke via `subprocess` with a known-good ruleset.
-- [ ] Parse JSON output into a list of `RawFinding` dataclasses.
-- [ ] Handle missing binary, timeout, non-zero exit codes (gitleaks returns non-zero when findings exist — that's not an error).
+- [x] Locate the bundled gitleaks binary (in `vendor/gitleaks/<platform>/`).
+- [x] Invoke via `subprocess` with a known-good ruleset.
+- [x] Parse JSON output into a list of `RawFinding` dataclasses.
+- [x] Handle missing binary, timeout, non-zero exit codes (gitleaks returns non-zero when findings exist — that's not an error).
 
 **Acceptance:** Fixture repository with planted secrets; scanner finds exactly the planted ones.
 
 ### Task 5.2 — Filesystem hunt (`core/scanner/fileshunt.py`)
 
-- [ ] Walk a root path; find files matching `.env*`, `*credentials*`, `secrets.y*ml`, `.npmrc`, `.pypirc`, etc.
-- [ ] Skip `node_modules`, `.git`, `.venv`, `__pycache__` by default.
-- [ ] Configurable allow/deny lists for paths.
-- [ ] For each matched file, extract lines that look like `KEY=value` pairs; return `RawFinding` records.
+- [x] Walk a root path; find files matching `.env*`, `*credentials*`, `secrets.y*ml`, `.npmrc`, `.pypirc`, etc.
+- [x] Skip `node_modules`, `.git`, `.venv`, `__pycache__` by default.
+- [x] Configurable allow/deny lists for paths.
+- [x] For each matched file, extract lines that look like `KEY=value` pairs; return `RawFinding` records.
 
 **Acceptance:** Tests against fixture directory tree assert expected findings and ignored paths.
 
 ### Task 5.3 — Matcher (`core/scanner/matcher.py`)
 
-- [ ] Given `RawFinding`s and the vault, compute SHA-256 fingerprints and match against stored `KeyVersion.fingerprint` values.
-- [ ] Produce `Exposure` records, each linked to the matching `KeyVersion`.
-- [ ] Update the `Key.exposure_status` and `Key.exposures` list.
+- [x] Given `RawFinding`s and the vault, compute SHA-256 fingerprints and match against stored `KeyVersion.fingerprint` values.
+- [x] Produce `Exposure` records, each linked to the matching `KeyVersion`.
+- [x] Update the `Key.exposure_status` and `Key.exposures` list.
 
 **Acceptance:** End-to-end test: plant a key that matches a vault entry in a fake git repo; run the scanner; assert the corresponding `Key` is flagged as `CONFIRMED_LEAKED` with a new `Exposure` record.
 
