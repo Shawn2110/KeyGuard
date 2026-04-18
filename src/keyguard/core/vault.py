@@ -254,6 +254,14 @@ class UnlockedVault:
         _atomic_write(self.path, envelope, backup_count=self.vault.settings.backup_count)
         self._access_log_length_at_open = len(self.vault.access_log)
 
+    def zeroize(self) -> None:
+        """Best-effort overwrite of the in-memory DEK.
+
+        Python's GC makes true zeroization impossible, but this at least
+        clears the most common references. Called by :class:`Session.lock`.
+        """
+        self._dek = b"\x00" * crypto.DEK_LEN
+
     def rotate_password(self, new_password: str, local_half: bytes) -> None:
         """Re-derive ``KEK_primary`` under a new password and re-wrap the DEK.
 
