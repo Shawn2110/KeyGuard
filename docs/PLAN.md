@@ -113,8 +113,8 @@
 
 ### Task 4.2 — Audit log (`core/audit.py`)
 
-- [ ] Append-only API; no methods to delete or edit events.
-- [ ] `Session.save` refuses to persist if the access log has shrunk since unlock.
+- [x] Append-only API; no methods to delete or edit events.
+- [x] `Session.save` refuses to persist if the access log has shrunk since unlock.
 
 **Acceptance:** Attempt to mutate a prior event raises; shrinking the log and saving raises.
 
