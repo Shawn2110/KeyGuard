@@ -8,13 +8,13 @@
 
 ### Task 0.1 — Repo scaffold
 
-- [ ] Initialize repository with `uv init`.
-- [ ] Create `pyproject.toml` with dependencies per `AGENT.md` §5.
-- [ ] Create the `src/keyguard/` directory structure per `ARCHITECTURE.md` §3.
-- [ ] Configure `ruff`, `mypy --strict`, `pytest`, `bandit` in `pyproject.toml`.
-- [ ] Add `.pre-commit-config.yaml` running ruff, mypy, and the test suite.
-- [ ] Add GitHub Actions workflow: lint → type-check → test → security scan.
-- [ ] Add `.gitignore` for Python, IDE files, and test artifacts.
+- [x] Initialize repository with `uv init`.
+- [x] Create `pyproject.toml` with dependencies per `AGENT.md` §5.
+- [x] Create the `src/keyguard/` directory structure per `ARCHITECTURE.md` §3.
+- [x] Configure `ruff`, `mypy --strict`, `pytest`, `bandit` in `pyproject.toml`.
+- [x] Add `.pre-commit-config.yaml` running ruff, mypy, and the test suite.
+- [x] Add GitHub Actions workflow: lint → type-check → test → security scan.
+- [x] Add `.gitignore` for Python, IDE files, and test artifacts.
 
 **Acceptance:** `uv sync && uv run pytest` runs cleanly on an empty test suite; `uv run ruff check` passes; `uv run mypy --strict src/` passes.
 
@@ -48,8 +48,8 @@
 
 ### Task 1.2 — Error hierarchy (`core/errors.py`)
 
-- [ ] Implement the exception tree from `ARCHITECTURE.md` §9.
-- [ ] Each exception class has a docstring describing when it's raised.
+- [x] Implement the exception tree from `ARCHITECTURE.md` §9.
+- [x] Each exception class has a docstring describing when it's raised.
 
 **Acceptance:** Import from `keyguard.core.errors`; used consistently by `crypto.py`.
 
