@@ -66,7 +66,7 @@ class StripeProvider(Provider):
 
     name: ClassVar[str] = "stripe"
     display_name: ClassVar[str] = "Stripe"
-    key_pattern: ClassVar[re.Pattern[str]] = re.compile(r"^sk_(test|live)_[A-Za-z0-9]{24,}$")
+    key_pattern: ClassVar[re.Pattern[str]] = re.compile(r"sk_(test|live)_[A-Za-z0-9]{24,}")
 
     def test_key(self, key: str) -> bool:
         try:
