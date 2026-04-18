@@ -26,7 +26,7 @@ class OpenAIProvider(Provider):
 
     name: ClassVar[str] = "openai"
     display_name: ClassVar[str] = "OpenAI"
-    key_pattern: ClassVar[re.Pattern[str]] = re.compile(r"^sk-[A-Za-z0-9_\-]{20,}$")
+    key_pattern: ClassVar[re.Pattern[str]] = re.compile(r"sk-[A-Za-z0-9_\-]{20,}")
 
     def test_key(self, key: str) -> bool:
         """Cheap GET /v1/models to verify auth."""
