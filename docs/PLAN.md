@@ -82,18 +82,18 @@
 
 ### Task 3.1 — Keychain wrapper (`core/keychain.py`)
 
-- [ ] Thin typed wrapper over `keyring` with methods: `store_local_half`, `load_local_half`, `store_totp_secret`, `load_totp_secret`, `delete_all_keyguard_entries`.
-- [ ] Map `keyring` exceptions to our `KeychainError` subclasses.
-- [ ] Handle the "first run on a new machine" case gracefully.
+- [x] Thin typed wrapper over `keyring` with methods: `store_local_half`, `load_local_half`, `store_totp_secret`, `load_totp_secret`, `delete_all_keyguard_entries`.
+- [x] Map `keyring` exceptions to our `KeychainError` subclasses.
+- [x] Handle the "first run on a new machine" case gracefully.
 
 **Acceptance:** Unit tests use a mock keyring backend (`keyring.backends.null` or a custom one). No real keychain touched in tests.
 
 ### Task 3.2 — TOTP module (`core/totp.py`)
 
-- [ ] `generate_totp_secret() -> bytes`
-- [ ] `provisioning_uri(secret: bytes, account: str) -> str`
-- [ ] `render_qr_ascii(uri: str) -> str` — for terminal display.
-- [ ] `verify_code(secret: bytes, code: str, valid_window: int = 1) -> bool`
+- [x] `generate_totp_secret() -> bytes`
+- [x] `provisioning_uri(secret: bytes, account: str) -> str`
+- [x] `render_qr_ascii(uri: str) -> str` — for terminal display.
+- [x] `verify_code(secret: bytes, code: str, valid_window: int = 1) -> bool`
 
 **Acceptance:** Unit tests cover correct code acceptance, clock-skew tolerance, incorrect code rejection, and malformed input.
 
